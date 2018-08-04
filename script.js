@@ -311,7 +311,7 @@ var drawCal = function(today, todate, input_data) {
 
         	ret = 'rgb(0, 0, 200)';
         	if (d.value > HR_mod) {
-        		ret = 'rgb(0, 200, 0);'
+        		ret = 'rgb(0, 200, 0)'
         	}
         	if (d.value > HR_vig) { 
         		ret = 'rgb(200, 0, 0)';
