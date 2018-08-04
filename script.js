@@ -163,7 +163,7 @@ var drawCal = function(today, todate, input_data) {
 		counter = 0;
         string.split('').forEach(function(a) { if ('F'.includes(a)) { counter += 1 } })
 
-        console.log('counter:', counter);
+        // console.log('counter:', counter);
 
 
 
@@ -309,12 +309,12 @@ var drawCal = function(today, todate, input_data) {
         })
         .attr("stroke", function(d) {
 
-        	ret = 'rgb(0, 0, 200)';
+        	ret = '#0074D9';
         	if (d.value > HR_mod) {
-        		ret = 'rgb(0, 200, 0)'
+        		ret = '#FFDC00'
         	}
         	if (d.value > HR_vig) { 
-        		ret = 'rgb(200, 0, 0)';
+        		ret = '#FF4136';
         	}
         	return ret;
 
