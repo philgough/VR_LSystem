@@ -62,42 +62,11 @@ var loadFiles = function() {
 	// })
 
 }
-
-
-
-d3.select('body').append("svg")
-	.attr("class", 'chart')
-	.attr("width", 900)
-	.attr('height', 600);
-
-// calendar
-for (var i = 0; i < 30; i++) {
-	// friday was the 1st of Sept.
-	var j = i + 5;
-	var xPos = j % 7 * 120;
-    var yPos = Math.floor(j/7) * 120;
-
-
-
-    d3.select("svg").append('rect')
-    .attr("x", xPos)
-    .attr('y', yPos	)
-    .attr('width', 100)
-    .attr('height', 100)
-    // .attr('y', 100)
-    .attr('stroke', 'black')
-    .attr("fill", 'none');
-}
-
-
-
-
-
 // create the calendar layout
 chartPadding = {
-	'left': 10,
+	'left': 11,
 	'right': 10,
-	'top': 10,
+	'top': 25,
 	'bottom': 10
 }
 
@@ -111,6 +80,65 @@ days = ['Sunday',
 		'Friday',
 		'Saturday'
 ];
+
+
+
+d3.select('body').append("svg")
+	.attr("class", 'chart')
+	.attr("width", 900)
+	.attr('height', 600);
+
+d3.select("svg").append("rect")
+	.attr("fill", '#dddddd')
+	.attr("stroke", 'none')
+	.attr("x", 0)
+	.attr("y", 0)
+	.attr('width', 800)
+	.attr('height', 14)
+
+// calendar
+for (var i = 0; i < 30; i++) {
+	// friday was the 1st of Sept.
+	var j = i + 5;
+	var xPos = j % 7 * 120 + 1;
+    var yPos = Math.floor(j/7) * 120 + 15;
+
+
+
+    d3.select("svg").append('rect')
+    .attr("x", xPos)
+    .attr('y', yPos	)
+    .attr('width', 100)
+    .attr('height', 100)
+    // .attr('y', 100)
+    .attr('stroke', 'black')
+    .attr("fill", 'none');
+
+    d3.select("svg").append('text')
+    .attr("x", function() {
+    	return xPos + 3;
+    })
+    .attr("y", function() {
+    	return yPos + 12;
+    })
+    .text(i+1);
+
+	
+
+}
+
+
+for (var i = 0; i < 7; i++) {
+	var j = i + 5;
+	var xPos = j % 7 * 120 + 1;
+	d3.select('svg').append('text')
+		.attr('class', 'days')
+		.attr('x', xPos)
+		.attr('y', 10)
+		.text(days[j%7]);
+}
+
+
 
 var OffsetX = function(today, todate) {
 	// friday was the first
