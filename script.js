@@ -373,4 +373,4 @@ var drawCal = function(today, todate, input_data) {
 }
 
 
-// loadFiles();
+loadFiles();
