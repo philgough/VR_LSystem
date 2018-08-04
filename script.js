@@ -157,11 +157,31 @@ var OffsetY = function(today, todate) {
 }
 
 
+// legend
+
+var cols = ['#0074D9','#FFDC00','#FF4136'];
+var colLevels = ['Low', 'Moderate', 'Vigorous'];
+
+for (var i = 0; i < 3; i++) {
+	d3.select("svg").append("rect")
+		.attr("x", 5)
+		.attr("y", i * 12 + 20 )
+		.attr("width", 10)
+		.attr("height", 10)
+		.attr("fill", cols[i])
+
+	d3.select("svg").append("text")
+		.attr("x", 17)
+		.attr("y", i * 12 + 28)
+		.text(colLevels[i]+' workout intensity')
+
+}
+
 
 
 var drawCal = function(today, todate, input_data) {
 
-	console.log("drawing calendar", input_data);
+	// console.log("drawing calendar", input_data);
 
     var w = window.innerwidth,
         h = window.innerheight;
@@ -337,12 +357,12 @@ var drawCal = function(today, todate, input_data) {
         })
         .attr("stroke", function(d) {
 
-        	ret = '#0074D9';
+        	ret = cols[0];
         	if (d.value > HR_mod) {
-        		ret = '#FFDC00'
+        		ret = cols[1]
         	}
         	if (d.value > HR_vig) { 
-        		ret = '#FF4136';
+        		ret = cols[2];
         	}
         	return ret;
 
@@ -353,4 +373,4 @@ var drawCal = function(today, todate, input_data) {
 }
 
 
-loadFiles();
+// loadFiles();
