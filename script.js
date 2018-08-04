@@ -13,53 +13,53 @@ var
 var loadFiles = function() {
 	console.log("loading files");
 	d3.csv('data/day1.csv').then(function(data) {
-		console.log('loaded day1');
+		//console.log('loaded day1');
 		// day1 = data;
 		drawCal('Monday', 4, data);
 	})
 	d3.csv('data/day2.csv').then(function(data) {
-		console.log('loaded day2');
+		//console.log('loaded day2');
 		// day2 = data;
 		drawCal('Wednesday', 6, data);
 	})
 	d3.csv('data/day3.csv').then(function(data) {
-		console.log('loaded day3');
+		//console.log('loaded day3');
 		// day3 = data;
 		drawCal('Friday', 8, data);
 	})
 	d3.csv('data/day4.csv').then(function(data) {
-		console.log('loaded day4');
+		//console.log('loaded day4');
 		// day4 = data;
 		drawCal('Tuesday', 12, data);
 	})
 	d3.csv('data/day5.csv').then(function(data) {
-		console.log('loaded day5');
+		//console.log('loaded day5');
 		// day5 = data;
 		drawCal('Thursday', 14, data);
 	})
 	d3.csv('data/day6.csv').then(function(data) {
-		console.log('loaded day6');
+		//console.log('loaded day6');
 		// day6.push(data);
 		drawCal('Monday', 18, data);
 	})
 	d3.csv('data/day7.csv').then(function(data) {
-		console.log('loaded day7');
+		//// console.log('loaded day7');
 		// day7.push(data);
 		drawCal('Thursday', 21, data);
 	})
 	d3.csv('data/day8.csv').then(function(data) {
-		console.log('loaded day8');
+		//// console.log('loaded day8');
 		// day8.push(data);
-		drawCal('Tuesday', 26, day1);
+		drawCal('Tuesday', 26, data);
 	})
-	// d3.csv('data/day9.csv', function(data) {
-	// 	// console.log('loaded day1')
-	// 	day9.push(data);
-	// })
-	// d3.csv('data/day10.csv', function(data) {
-	// 	// console.log('loaded day1')
-	// 	day10.push(data);
-	// })
+	d3.csv('data/day9.csv', function(data) {
+		//// console.log('loaded day1')
+		drawCal('Thrsday', 28, data);
+	})
+	d3.csv('data/day10.csv', function(data) {
+		//// console.log('loaded day1')
+		drawCal('Friday', 29, data)
+	})
 
 }
 // create the calendar layout
