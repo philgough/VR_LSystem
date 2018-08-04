@@ -93,8 +93,8 @@ d3.select("svg").append("rect")
 	.attr("stroke", 'none')
 	.attr("x", 0)
 	.attr("y", 0)
-	.attr('width', 800)
-	.attr('height', 14)
+	.attr('width', 822)
+	.attr('height', 15)
 
 // calendar
 for (var i = 0; i < 30; i++) {
@@ -119,7 +119,7 @@ for (var i = 0; i < 30; i++) {
     	return xPos + 3;
     })
     .attr("y", function() {
-    	return yPos + 12;
+    	return yPos + 13;
     })
     .text(i+1);
 
