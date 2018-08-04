@@ -52,14 +52,14 @@ var loadFiles = function() {
 		// day8.push(data);
 		drawCal('Tuesday', 26, data);
 	})
-	d3.csv('data/day9.csv', function(data) {
-		//// console.log('loaded day1')
-		drawCal('Thrsday', 28, data);
-	})
-	d3.csv('data/day10.csv', function(data) {
-		//// console.log('loaded day1')
-		drawCal('Friday', 29, data)
-	})
+	// d3.csv('data/day9.csv', function(data) {
+	// 	//// console.log('loaded day1')
+	// 	drawCal('Thrsday', 28, data);
+	// })
+	// d3.csv('data/day10.csv', function(data) {
+	// 	//// console.log('loaded day1')
+	// 	drawCal('Friday', 29, data)
+	// })
 
 }
 // create the calendar layout
@@ -181,7 +181,7 @@ for (var i = 0; i < 3; i++) {
 
 var drawCal = function(today, todate, input_data) {
 
-	// console.log("drawing calendar", input_data);
+	console.log("drawing calendar", input_data[0]);
 
     var w = window.innerwidth,
         h = window.innerheight;
