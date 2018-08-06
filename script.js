@@ -11,14 +11,15 @@ var
 	// day10 = [];
 
 gameOrder = [
-	'holoball'
-	'longbow',
-	'holopoint',
-	'longbow',
-	'longbow',
-	'fruitninja'
-	'longbow'
-	'fruitninja',
+	['holoball',4],
+	['longbow',6],
+	['holopoint',8],
+	['longbow',12],
+	['longbow',14],
+	['fruitninja',18],
+	['longbow',12],
+	['fruitninja',26],
+	['longbow',28]
 
 ];
 
@@ -35,47 +36,47 @@ var loadFiles = function() {
 	d3.csv('data/day1.csv').then(function(data) {
 		//console.log('loaded day1');
 		// day1 = data;
-		drawCal('Monday', 4, data, gameOrder[1]);
+		drawCal('Monday', 4, data, gameOrder[0][0], 0);
 	})
 	d3.csv('data/day2.csv').then(function(data) {
 		//console.log('loaded day2');
 		// day2 = data;
-		drawCal('Wednesday', 6, data, gameOrder[2]);
+		drawCal('Wednesday', 6, data, gameOrder[1][0], 1);
 	})
 	d3.csv('data/day3.csv').then(function(data) {
 		//console.log('loaded day3');
 		// day3 = data;
-		drawCal('Friday', 8, data, gameOrder[3]);
+		drawCal('Friday', 8, data, gameOrder[2][0], 2);
 	})
 	d3.csv('data/day4.csv').then(function(data) {
 		//console.log('loaded day4');
 		// day4 = data;
-		drawCal('Tuesday', 12, data, gameOrder[4]);
+		drawCal('Tuesday', 12, data, gameOrder[3][0], 3);
 	})
 	d3.csv('data/day5.csv').then(function(data) {
 		//console.log('loaded day5');
 		// day5 = data;
-		drawCal('Thursday', 14, data, gameOrder[5]);
+		drawCal('Thursday', 14, data, gameOrder[4][0], 4);
 	})
 	d3.csv('data/day6.csv').then(function(data) {
 		//console.log('loaded day6');
 		// day6.push(data);
-		drawCal('Monday', 18, data, gameOrder[6]);
+		drawCal('Monday', 18, data, gameOrder[5][0], 5);
 	})
 	d3.csv('data/day7.csv').then(function(data) {
 		//// console.log('loaded day7');
 		// day7.push(data);
-		drawCal('Thursday', 21, data, gameOrder[7]);
+		drawCal('Thursday', 21, data, gameOrder[6][0], 6);
 	})
 	d3.csv('data/day8.csv').then(function(data) {
 		//// console.log('loaded day8');
 		// day8.push(data);
-		drawCal('Tuesday', 26, data, gameOrder[8]);
+		drawCal('Tuesday', 26, data, gameOrder[7][0], 7);
 	})
-	d3.csv('data/day9.csv', function(data) {
-		//// console.log('loaded day1')
-		drawCal('Thrsday', 28, data, gameOrder[9]);
-	})
+	// d3.csv('data/day9.csv', function(data) {
+	// 	console.log('loaded day9')
+	// 	drawCal('Thrsday', 28, data, gameOrder[8][0]);
+	// })
 	// d3.csv('data/day10.csv', function(data) {
 	// 	//// console.log('loaded day1')
 	// 	drawCal('Friday', 29, data)
@@ -138,6 +139,7 @@ bgElements.append("rect")
 	.attr('width', 830)
 	.attr('height', 15)
 
+
 // calendar
 for (var i = 0; i < 30; i++) {
 	// friday was the 1st of Sept.
@@ -164,9 +166,6 @@ for (var i = 0; i < 30; i++) {
     	return yPos + 13;
     })
     .text(i+1);
-
-	
-
 }
 
 
@@ -219,9 +218,33 @@ for (var i = 0; i < 3; i++) {
 
 }
 
+d3.select("svg").append("text")
+	.attr("x", 196)
+	.attr("y", 26)
+	.text("Game:");
+
+var colCounter = 0;
+for (var key in gameColours) {
+	bgElements.append("circle")
+		.attr('cx', 200)
+		.attr("cy", colCounter * 12 + 34)
+		.attr("r", 4)
+		.attr('fill', gameColours[key])
+		.attr("stroke", 'black')
+		.attr("stroke-width", 0.25);
+
+	d3.select("svg").append("text")
+		.attr("x", 210)
+		.attr("y", colCounter * 12 + 38)
+		.text(key);
+
+		colCounter++;
+}
 
 
-var drawCal = function(today, todate, input_data) {
+
+
+var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
 
 	console.log("drawing calendar", input_data[0]);
 
@@ -302,9 +325,9 @@ var drawCal = function(today, todate, input_data) {
                 av /= 5;
                 datum.value = av;
                 // console.log(av);
-
                 thisLine += inc;
 
+                datum.game = gameName;
                 lineData.push(datum);
 
                 step.branch.path += "L" + step.x + "," + step.y;
@@ -412,6 +435,19 @@ var drawCal = function(today, todate, input_data) {
             // return 'rgb(255, 0, ' + d.value + ')';
         })
         .attr("stroke-opacity", 1);
+
+    chart.selectAll('circle')
+    	.data([today, todate, gameOrderIndex]).enter()
+    	.append('circle')
+    	.attr("cx", function(d) {return OffsetX(today, todate) + 83})
+    	.attr('cy', function(d) {return OffsetY(today, todate) - 3})
+    	.attr('r', 4)
+    	.attr('fill', function(d) {return gameColours[gameName]})
+		.attr("stroke", 'black')
+		.attr("stroke-width", 0.25);
+
+;
+
 }
 
 
