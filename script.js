@@ -200,7 +200,7 @@ var OffsetY = function(today, todate) {
 
 // legend
 
-var cols = ['#0074D9','#FFDC00','#FF4136'];
+var cols = ['#0074D9','#FFBF1C','#FF4136'];
 var colLevels = ['Low', 'Moderate', 'Vigorous'];
 
 for (var i = 0; i < 3; i++) {
