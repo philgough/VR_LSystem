@@ -10,52 +10,72 @@ var
 	// day9 = [],
 	// day10 = [];
 
+gameOrder = [
+	'holoball'
+	'longbow',
+	'holopoint',
+	'longbow',
+	'longbow',
+	'fruitninja'
+	'longbow'
+	'fruitninja',
+
+];
+
+gameColours = {
+	'longbow':'#7FDBFF',
+	'fruitninja': '#01FF70',
+	'holopoint': '#FFDC00',
+	'holoball': '#F012BE'
+};
+
+
 var loadFiles = function() {
 	console.log("loading files");
 	d3.csv('data/day1.csv').then(function(data) {
 		//console.log('loaded day1');
 		// day1 = data;
-		drawCal('Monday', 4, data);
+		drawCal('Monday', 4, data, gameOrder[1]);
 	})
 	d3.csv('data/day2.csv').then(function(data) {
 		//console.log('loaded day2');
 		// day2 = data;
-		drawCal('Wednesday', 6, data);
+		drawCal('Wednesday', 6, data, gameOrder[2]);
 	})
 	d3.csv('data/day3.csv').then(function(data) {
 		//console.log('loaded day3');
 		// day3 = data;
-		drawCal('Friday', 8, data);
+		drawCal('Friday', 8, data, gameOrder[3]);
 	})
 	d3.csv('data/day4.csv').then(function(data) {
 		//console.log('loaded day4');
 		// day4 = data;
-		drawCal('Tuesday', 12, data);
+		drawCal('Tuesday', 12, data, gameOrder[4]);
 	})
 	d3.csv('data/day5.csv').then(function(data) {
 		//console.log('loaded day5');
 		// day5 = data;
-		drawCal('Thursday', 14, data);
+		drawCal('Thursday', 14, data, gameOrder[5]);
 	})
 	d3.csv('data/day6.csv').then(function(data) {
 		//console.log('loaded day6');
 		// day6.push(data);
-		drawCal('Monday', 18, data);
+		drawCal('Monday', 18, data, gameOrder[6]);
 	})
 	d3.csv('data/day7.csv').then(function(data) {
 		//// console.log('loaded day7');
 		// day7.push(data);
-		drawCal('Thursday', 21, data);
+		drawCal('Thursday', 21, data, gameOrder[7]);
 	})
 	d3.csv('data/day8.csv').then(function(data) {
 		//// console.log('loaded day8');
 		// day8.push(data);
-		drawCal('Tuesday', 26, data);
+		drawCal('Tuesday', 26, data, gameOrder[8]);
 	})
-	// d3.csv('data/day9.csv', function(data) {
-	// 	//// console.log('loaded day1')
-	// 	drawCal('Thrsday', 28, data);
-	// })
+	d3.csv('data/day9.csv', function(data) {
+		//// console.log('loaded day1')
+		drawCal('Thrsday', 28, data, gameOrder[9]);
+	})
 	// d3.csv('data/day10.csv', function(data) {
 	// 	//// console.log('loaded day1')
 	// 	drawCal('Friday', 29, data)
@@ -72,15 +92,27 @@ chartPadding = {
 
 
 
-days = ['Sunday',
+// gameOrder = [
+// 	'holoball'
+// 	'longbow',
+// 	'holopoint',
+// 	'longbow',
+// 	'fruitninja',
+// 	'longbow',
+// 	'longbow'
+// ]
+
+
+
+days = [
 		'Monday',
 		'Tuesday',
 		'Wednesday',
 		'Thursday',
 		'Friday',
-		'Saturday'
+		'Saturday',
+		'Sunday'
 ];
-
 
 
 d3.select('body').append("svg")
@@ -88,18 +120,28 @@ d3.select('body').append("svg")
 	.attr("width", 900)
 	.attr('height', 600);
 
-d3.select("svg").append("rect")
+bgElements = d3.select('svg').append('g')
+
+bgElements.append("rect")
+	.attr("fill", '#efefef')
+	.attr("stroke", 'none')
+	.attr("x", 590)
+	.attr("y", 0)
+	.attr('width', 240)
+	.attr('height', 600)
+
+bgElements.append("rect")
 	.attr("fill", '#dddddd')
 	.attr("stroke", 'none')
 	.attr("x", 0)
 	.attr("y", 0)
-	.attr('width', 822)
+	.attr('width', 830)
 	.attr('height', 15)
 
 // calendar
 for (var i = 0; i < 30; i++) {
 	// friday was the 1st of Sept.
-	var j = i + 5;
+	var j = i + 4;
 	var xPos = j % 7 * 120 + 1;
     var yPos = Math.floor(j/7) * 120 + 15;
 
@@ -112,7 +154,7 @@ for (var i = 0; i < 30; i++) {
     .attr('height', 100)
     // .attr('y', 100)
     .attr('stroke', 'black')
-    .attr("fill", 'none');
+    .attr("fill", 'white');
 
     d3.select("svg").append('text')
     .attr("x", function() {
@@ -129,7 +171,7 @@ for (var i = 0; i < 30; i++) {
 
 
 for (var i = 0; i < 7; i++) {
-	var j = i + 5;
+	var j = i + 4;
 	var xPos = j % 7 * 120 + 1;
 	d3.select('svg').append('text')
 		.attr('class', 'days')
