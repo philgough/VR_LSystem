@@ -11,23 +11,26 @@ var
 	// day10 = [];
 
 gameOrder = [
-	['holoball',4],
-	['longbow',6],
-	['holopoint',8],
-	['longbow',12],
-	['longbow',14],
-	['fruitninja',18],
-	['longbow',12],
-	['fruitninja',26],
-	['longbow',28]
+	['Holoball', 4],
+	['Fruitninja', 6],
+	['Holopoint', 8],
+	['Longbow', 12],
+	['Longbow', 14],
+	['Holopoint', 18],
+	['HotSquat', 21],
+	['Fruitninja', 26],
+	['HotSquat', 28],
+	['Longbow', 29]
+
 
 ];
 
 gameColours = {
-	'longbow':'#7FDBFF',
-	'fruitninja': '#01FF70',
-	'holopoint': '#FFDC00',
-	'holoball': '#F012BE'
+	'HotSquat': '#B10DC9',
+	'Longbow':'#7FDBFF',
+	'Fruitninja': '#01FF70',
+	'Holoball': '#F012BE',
+	'Holopoint': '#FFDC00',
 };
 
 
@@ -73,14 +76,14 @@ var loadFiles = function() {
 		// day8.push(data);
 		drawCal('Tuesday', 26, data, gameOrder[7][0], 7);
 	})
-	// d3.csv('data/day9.csv', function(data) {
-	// 	console.log('loaded day9')
-	// 	drawCal('Thrsday', 28, data, gameOrder[8][0]);
-	// })
-	// d3.csv('data/day10.csv', function(data) {
-	// 	//// console.log('loaded day1')
-	// 	drawCal('Friday', 29, data)
-	// })
+	d3.csv('data/day9.csv').then(function(data) {
+		// console.log('loaded day9');
+		drawCal('Thursday', 28, data, gameOrder[8][0], 8);
+	})
+	d3.csv('data/day10.csv').then(function(data) {
+		//// console.log('loaded day1')
+		drawCal('Friday', 29, data, gameOrder[9][0], 9)
+	})
 
 }
 // create the calendar layout
@@ -94,13 +97,13 @@ chartPadding = {
 
 
 // gameOrder = [
-// 	'holoball'
-// 	'longbow',
-// 	'holopoint',
-// 	'longbow',
-// 	'fruitninja',
-// 	'longbow',
-// 	'longbow'
+// 	'Holoball'
+// 	'Longbow',
+// 	'Holopoint',
+// 	'Longbow',
+// 	'Fruitninja',
+// 	'Longbow',
+// 	'Longbow'
 // ]
 
 
@@ -219,29 +222,164 @@ for (var i = 0; i < 3; i++) {
 }
 
 d3.select("svg").append("text")
-	.attr("x", 196)
+	.attr("x", 180)
 	.attr("y", 26)
 	.text("Game:");
 
 var colCounter = 0;
 for (var key in gameColours) {
-	bgElements.append("circle")
-		.attr('cx', 200)
-		.attr("cy", colCounter * 12 + 34)
-		.attr("r", 4)
-		.attr('fill', gameColours[key])
-		.attr("stroke", 'black')
-		.attr("stroke-width", 0.25);
+	// bgElements.append("circle")
+	// 	.attr('cx', 200)
+	// 	.attr("cy", colCounter * 12 + 34)
+	// 	.attr("r", 4)
+	// 	.attr('fill', gameColours[key])
+	// 	.attr("stroke", 'black')
+	// 	.attr("stroke-width", 0.25);
 
-	d3.select("svg").append("text")
+
+	// console.log('external',	key)
+	var bg_vr = d3.select('svg').append('g').attr('id', 'vr-icon-'+key);
+	
+
+	// d3.select("svg").append("text")
+	// 	.attr("x", 210)
+	// 	.attr("y", colCounter * 12 + 38)
+	// 	.text(key);
+
+	// 	colCounter++;
+};
+
+colCounter = 0
+d3.xml("img/vr.svg").then(function(xml) {
+	var importedNode = document.importNode(xml.documentElement, true);
+	d3.select('#vr-icon-HotSquat').each(function() {
+		// console.log('internal',key)
+		this.appendChild(importedNode);
+		// console.log('this', this)
+
+	})
+	// inside of our d3.xml callback, call another function
+	// that styles individual paths inside of our imported svg
+	// legendVR();
+		var temp = d3.select('#vr-icon-HotSquat')
+
+	temp.select('svg')	
+		.attr('width', '20')
+		.attr('x', 185)
+		.attr('y', -265 + 12 * colCounter)
+		.attr('fill', function() {return gameColours['HotSquat']})
+		
+	temp.append("text")
 		.attr("x", 210)
 		.attr("y", colCounter * 12 + 38)
-		.text(key);
+		.text('Hot Squat');
 
-		colCounter++;
-}
+	colCounter++;
+});
+d3.xml("img/vr.svg").then(function(xml) {
+	var importedNode = document.importNode(xml.documentElement, true);
+	d3.select('#vr-icon-Longbow').each(function() {
+		// console.log('internal',key)
+		this.appendChild(importedNode);
+		// console.log('this', this)
 
+	})
+	// inside of our d3.xml callback, call another function
+	// that styles individual paths inside of our imported svg
+	// legendVR();
+	var temp = d3.select('#vr-icon-Longbow')
 
+	temp.select('svg')	
+		.attr('width', '20')
+		.attr('x', 185)
+		.attr('y', -265 + 12 * colCounter)
+		.attr('fill', function() {return gameColours['Longbow']})
+		
+	temp.append("text")
+		.attr("x", 210)
+		.attr("y", colCounter * 12 + 38)
+		.text('Longbow');
+
+	colCounter++;
+});
+d3.xml("img/vr.svg").then(function(xml) {
+	var importedNode = document.importNode(xml.documentElement, true);
+	d3.select('#vr-icon-Fruitninja').each(function() {
+		// console.log('internal',key)
+		this.appendChild(importedNode);
+		// console.log('this', this)
+
+	})
+	// inside of our d3.xml callback, call another function
+	// that styles individual paths inside of our imported svg
+	// legendVR();
+		var temp = d3.select('#vr-icon-Fruitninja')
+
+	temp.select('svg')	
+		.attr('width', '20')
+		.attr('x', 185)
+		.attr('y', -265 + 12 * colCounter)
+		.attr('fill', function() {return gameColours['Fruitninja']})
+	
+	temp.append("text")
+		.attr("x", 210)
+		.attr("y", colCounter * 12 + 38)
+		.text('Fruitninja');	
+		
+
+	colCounter++;
+});
+d3.xml("img/vr.svg").then(function(xml) {
+	var importedNode = document.importNode(xml.documentElement, true);
+	d3.select('#vr-icon-Holoball').each(function() {
+		// console.log('internal',key)
+		this.appendChild(importedNode);
+		// console.log('this', this)
+
+	})
+	// inside of our d3.xml callback, call another function
+	// that styles individual paths inside of our imported svg
+	// legendVR();
+	var temp = d3.select('#vr-icon-Holoball')
+
+	temp.select('svg')	
+		.attr('width', '20')
+		.attr('x', 185)
+		.attr('y', -265 + 12 * colCounter)
+		.attr('fill', function() {return gameColours['Holoball']})
+		
+	temp.append("text")
+		.attr("x", 210)
+		.attr("y", colCounter * 12 + 38)
+		.text('Holoball');	
+
+	colCounter++;
+});
+d3.xml("img/vr.svg").then(function(xml) {
+	var importedNode = document.importNode(xml.documentElement, true);
+	d3.select('#vr-icon-Holopoint').each(function() {
+		// console.log('internal',key)
+		this.appendChild(importedNode);
+		// console.log('this', this)
+
+	})
+	// inside of our d3.xml callback, call another function
+	// that styles individual paths inside of our imported svg
+	var temp = d3.select('#vr-icon-Holopoint')
+
+	temp.select('svg')	
+		.attr('width', '20')
+		.attr('x', 185)
+		.attr('y', -265 + 12 * colCounter)
+		.attr('fill', function() {return gameColours['Holopoint']})
+		
+	temp.append("text")
+		.attr("x", 210)
+		.attr("y", colCounter * 12 + 38)
+		.text('Holopoint');	
+
+	colCounter++;
+});
 
 
 var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
@@ -268,7 +406,7 @@ var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
     var theta = Math.PI / 2.0,
         length = 3,
         x0 = 1,
-        y0 = 1,
+        y0 = 10,
         t0 = Math.PI / 2.0;
     lineData = [];
     function tree(string) {
@@ -366,7 +504,7 @@ var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
             // "F": "F-[-F+F+F-FF]+[+FF-F-F-]",
             'X': "XFX-YF-YF+FX+FX-YF-YFFX+YF+FXFXYF-FX+YF+FXFX+YF-FXYF-YF-FX+FX+YFYF-",
             'Y': "+FXFX-YF-YF+FX+FXYF+FX-YFYF-FX-YF+FXYFYF-FX-YFFX+FX+YF-YF-FX+FX+YFY",
-            'A': "+YF"
+	            'A': "+YF"
         }, 'A')))
         .each(grow);
 
@@ -399,6 +537,50 @@ var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
         .attr('id', today + '-' + todate)
         .attr('width', window.innerwidth)
         .attr('hight', window.innerheight);
+
+
+	d3.xml("img/vr.svg").then(function(xml) {
+		var importedNode = document.importNode(xml.documentElement, true);
+		d3.select('#'+today + '-' + todate).each(function() {
+			this.appendChild(importedNode);
+
+		})
+		// inside of our d3.xml callback, call another function
+		// that styles individual paths inside of our imported svg
+
+		 styleImportedSVG()
+	});
+
+	function styleImportedSVG() {
+		d3.select('#'+today + '-' + todate).select('svg')
+			.attr('width', '20')
+			.attr('fill', function() {return gameColours[gameName]})
+	    	.attr('x', function() {return OffsetX(today, todate) + 70})
+	    	.attr('y', function() {return OffsetY(today, todate) - 302})
+		// chart.select("svg").style("fill", 'green');
+		// console.log('this', that)
+        // d3.select('svg')
+        	// d3.select("")
+          // .on('mouseover', function() {
+          //   console.log('mouseover');
+          //   console.log('this', this);
+          //   d3.selectAll('path')
+          //     .style({
+          //       'stroke': 'green',
+          //       // 'stroke-opacity': 0.3
+          //       // ''
+
+          //     })
+          // })
+          // .on('mouseout', function() {
+          //   console.log('mouseout');
+          //   d3.selectAll('path')
+          //     .style({
+          //       'fill-opacity':   1,
+          //       'stroke-opacity': 1
+          //     })
+          // })
+	}
 
     chart.selectAll('line')
         .data(lineData).enter()
@@ -436,17 +618,17 @@ var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
         })
         .attr("stroke-opacity", 1);
 
-    chart.selectAll('circle')
-    	.data([today, todate, gameOrderIndex]).enter()
-    	.append('circle')
-    	.attr("cx", function(d) {return OffsetX(today, todate) + 83})
-    	.attr('cy', function(d) {return OffsetY(today, todate) - 3})
-    	.attr('r', 4)
-    	.attr('fill', function(d) {return gameColours[gameName]})
-		.attr("stroke", 'black')
-		.attr("stroke-width", 0.25);
+  //   chart.selectAll('circle')
+  //   	.data([today, todate, gameOrderIndex]).enter()
+  //   	.append('circle')
+  //   	.attr("cx", function(d) {return OffsetX(today, todate) + 83})
+  //   	.attr('cy', function(d) {return OffsetY(today, todate) - 3})
+  //   	.attr('r', 4)
+  //   	.attr('fill', function(d) {return gameColours[gameName]})
+		// .attr("stroke", 'black')
+		// .attr("stroke-width", 0.25);
 
-;
+	
 
 }
 
