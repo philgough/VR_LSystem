@@ -179,6 +179,7 @@ for (var i = 0; i < 7; i++) {
 		.attr('class', 'days')
 		.attr('x', xPos)
 		.attr('y', 10)
+		.attr("font-weight", 'bold')
 		.text(days[j%7]);
 }
 
@@ -222,9 +223,10 @@ for (var i = 0; i < 3; i++) {
 }
 
 d3.select("svg").append("text")
+	.attr("font-weight", 'bold')
 	.attr("x", 180)
 	.attr("y", 26)
-	.text("Game:");
+	.text("VR Game played:");
 
 var colCounter = 0;
 for (var key in gameColours) {
