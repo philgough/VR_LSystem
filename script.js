@@ -215,23 +215,26 @@ calendarBoxesL2.selectAll('rect')
 	    	return colour;
 	    })
 	    .on('mouseover', function(d) {
+
 	    	// console.log(d);
 	    	if (d.vrToday) {
 
-		    	d3.select('#bodymap-none')
-		    		.attr('visibility', 'hidden');
-		    	d3.select('#bodymap-'+d.today+'-'+d.todate)
-		    		.attr('visibility', 'visible');
+		    vrBodymapOver(d.today, d.todate)
+		    	// d3.select('#bodymap-none')
+		    	// 	.attr('visibility', 'hidden');
+		    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
+		    	// 	.attr('visibility', 'visible');
 	    	}
 
 	    })
 	    .on('mouseleave', function(d) {
 	    	if (d.vrToday) {
 
-		    	d3.select('#bodymap-none')
-		    		.attr('visibility', 'visible');
-		    	d3.select('#bodymap-'+d.today+'-'+d.todate)
-		    		.attr('visibility', 'hidden');
+		    	vrBodymapLeave(d.today, d.todate);
+		    	// d3.select('#bodymap-none')
+		    	// 	.attr('visibility', 'visible');
+		    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
+		    	// 	.attr('visibility', 'hidden');
 	    	}
 
 	    })
@@ -267,23 +270,26 @@ calendarBoxes.selectAll('rect')
     .attr("fill", 'white')
     .attr('id', function(d) {return 'date-rect-'+d.todate})
     .on('mouseover', function(d) {
+
     	// console.log(d);
     	if (d.vrToday) {
 
-	    	d3.select('#bodymap-none')
-	    		.attr('visibility', 'hidden');
-	    	d3.select('#bodymap-'+d.today+'-'+d.todate)
-	    		.attr('visibility', 'visible');
+	    vrBodymapOver(d.today, d.todate)
+	    	// d3.select('#bodymap-none')
+	    	// 	.attr('visibility', 'hidden');
+	    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
+	    	// 	.attr('visibility', 'visible');
     	}
 
     })
     .on('mouseleave', function(d) {
     	if (d.vrToday) {
 
-	    	d3.select('#bodymap-none')
-	    		.attr('visibility', 'visible');
-	    	d3.select('#bodymap-'+d.today+'-'+d.todate)
-	    		.attr('visibility', 'hidden');
+	    	vrBodymapLeave(d.today, d.todate);
+	    	// d3.select('#bodymap-none')
+	    	// 	.attr('visibility', 'visible');
+	    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
+	    	// 	.attr('visibility', 'hidden');
     	}
 
     })
@@ -302,23 +308,26 @@ calendarBoxes.selectAll('text')
     	return d.todate
     })
     .on('mouseover', function(d) {
+
 	    	// console.log(d);
 	    	if (d.vrToday) {
 
-		    	d3.select('#bodymap-none')
-		    		.attr('visibility', 'hidden');
-		    	d3.select('#bodymap-'+d.today+'-'+d.todate)
-		    		.attr('visibility', 'visible');
+		vrBodymapOver(d.today, d.todate)
+		    	// d3.select('#bodymap-none')
+		    	// 	.attr('visibility', 'hidden');
+		    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
+		    	// 	.attr('visibility', 'visible');
 	    	}
 
 	    })
 	    .on('mouseleave', function(d) {
 	    	if (d.vrToday) {
 
-		    	d3.select('#bodymap-none')
-		    		.attr('visibility', 'visible');
-		    	d3.select('#bodymap-'+d.today+'-'+d.todate)
-		    		.attr('visibility', 'hidden');
+		    	vrBodymapLeave(d.today, d.todate);
+		    	// d3.select('#bodymap-none')
+		    	// 	.attr('visibility', 'visible');
+		    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
+		    	// 	.attr('visibility', 'hidden');
 	    	}
 
 	    })
@@ -748,23 +757,26 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
 	    	.attr('y', function() {return OffsetY(today, todate) - 300})
 
 	    	.on('mouseover', function(d) {
+
 	    	// console.log(d);
 	    	// if (d.vrToday) {
 
-		    	d3.select('#bodymap-none')
-		    		.attr('visibility', 'hidden');
-		    	d3.select('#bodymap-'+today+'-'+todate)
-		    		.attr('visibility', 'visible');
+		    	vrBodymapOver(today, todate)
+		    	// d3.select('#bodymap-none')
+		    	// 	.attr('visibility', 'hidden');
+		    	// d3.select('#bodymap-'+today+'-'+todate)
+		    	// 	.attr('visibility', 'visible');
 	    	// }
 
 	    })
 	    .on('mouseleave', function(d) {
 	    	// if (d.vrToday) {
 
-		    	d3.select('#bodymap-none')
-		    		.attr('visibility', 'visible');
-		    	d3.select('#bodymap-'+today+'-'+todate)
-		    		.attr('visibility', 'hidden');
+		    	vrBodymapLeave(today, todate);
+		    	// d3.select('#bodymap-none')
+		    	// 	.attr('visibility', 'visible');
+		    	// d3.select('#bodymap-'+today+'-'+todate)
+		    	// 	.attr('visibility', 'hidden');
 	    	// }
 
 	    })
@@ -828,23 +840,26 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
         })
         .attr("stroke-opacity", 1)
         .on('mouseover', function(d) {
+
 	    	// console.log(d);
 	    	// if (d.vrToday) {
 
-		    	d3.select('#bodymap-none')
-		    		.attr('visibility', 'hidden');
-		    	d3.select('#bodymap-'+today+'-'+todate)
-		    		.attr('visibility', 'visible');
+		    vrBodymapOver(today, todate)
+		    	// d3.select('#bodymap-none')
+		    	// 	.attr('visibility', 'hidden');
+		    	// d3.select('#bodymap-'+today+'-'+todate)
+		    	// 	.attr('visibility', 'visible');
 	    	// }
 
 	    })
 	    .on('mouseleave', function(d) {
 	    	// if (vrToday) {
 
-		    	d3.select('#bodymap-none')
-		    		.attr('visibility', 'visible');
-		    	d3.select('#bodymap-'+today+'-'+todate)
-		    		.attr('visibility', 'hidden');
+		    	vrBodymapLeave(today, todate);
+		    	// d3.select('#bodymap-none')
+		    	// 	.attr('visibility', 'visible');
+		    	// d3.select('#bodymap-'+today+'-'+todate)
+		    	// 	.attr('visibility', 'hidden');
 	    	// }
 
 	    })
@@ -866,3 +881,18 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
 
 
 loadFiles();
+
+
+function vrBodymapOver(today, todate) {
+	d3.select('#bodymap-none')
+		.attr('visibility', 'hidden');
+	d3.select('#bodymap-'+today+'-'+todate)
+		.attr('visibility', 'visible');
+}
+
+function vrBodymapLeave(today, todate) {
+	d3.select('#bodymap-none')
+		.attr('visibility', 'visible');
+	d3.select('#bodymap-'+today+'-'+todate)
+		.attr('visibility', 'hidden');
+}
