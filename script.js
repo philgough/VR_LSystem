@@ -27,7 +27,7 @@ gameOrder = [
 
 gameColours = {
 	'HotSquat': '#B10DC9',
-	'Longbow':'#7FDBFF',
+	'Longbow':'#3D9970',
 	'Fruitninja': '#01FF70',
 	'Holoball': '#F012BE',
 	'Holopoint': '#FFDC00',
@@ -39,12 +39,12 @@ var loadFiles = function() {
 	d3.csv('data/day1.csv').then(function(data) {
 		//console.log('loaded day1');
 		// day1 = data;
-		drawCal('Monday', 4, data, gameOrder[0][0], 0);
+		drawCal('Monday', 4, data, gameOrder[0][0],  0);
 	})
 	d3.csv('data/day2.csv').then(function(data) {
 		//console.log('loaded day2');
 		// day2 = data;
-		drawCal('Wednesday', 6, data, gameOrder[1][0], 1);
+		drawCal('Wednesday', 6, data, gameOrder[1][0],  1);
 	})
 	d3.csv('data/day3.csv').then(function(data) {
 		//console.log('loaded day3');
@@ -121,7 +121,7 @@ days = [
 
 d3.select('body').append("svg")
 	.attr("class", 'chart')
-	.attr("width", 900)
+	.attr("width", 1200)
 	.attr('height', 600);
 
 bgElements = d3.select('svg').append('g')
@@ -143,34 +143,139 @@ bgElements.append("rect")
 	.attr('height', 15)
 
 
+stepCount = new Array(30);
+for(var i = 0; i < stepCount.length; i++) {
+	var rand = 0;
+	for (var j = 0; j < 6 ; j++) {
+		rand += Math.random();
+	}
+	stepCount[i] = Math.floor(rand/6  * 12000 + 2000)
+}
+
+calendarBoxes = d3.select("svg").append('g')
+calendarBoxesL2 = d3.select("svg").append('g')
+
+calendarBoxesL2.selectAll('rect')
+	.data(stepCount).enter()
+	.append('rect')
+	    .attr('x', function(d, i) {
+	    	// console.log(d)
+			var j = i + 4;
+			var xPos = j % 7 * 120 + 1;
+		    // var yPos = Math.floor(j/7) * 120 + 15;
+		    return xPos;
+		})
+	    .attr('y', function(d, i) {
+			var j = i + 4;
+			// var xPos = j % 7 * 120 + 1;
+		    var yPos = Math.floor(j/7) * 120 + 15;
+	    	return yPos;
+
+	    })
+	    .attr('width', 100)
+	    .attr('height', 4)
+	    .attr('fill', function(d) {
+	    	var colour = '#DDDDDD'
+	    	if (d > 10000) {
+	    		colour = '#0074D9'
+	    	}
+	    	else {
+	    		if (d > 5000) {
+	    			colour = '#7FDBFF'
+	    		}
+	    	}
+	    	return colour;
+	    })
+
+	// .append('text')
+	// 	.attr("x", function(d, i) {
+	// 		var j = i + 4;
+	// 		var xPos = j % 7 * 120 + 1;
+	// 	    var yPos = Math.floor(j/7) * 120 + 15;    	
+	// 		return xPos + 3;
+	// 	})
+	// 	.attr("y", function(d, i) {
+	// 		var j = i + 4;
+	// 		var xPos = j % 7 * 120 + 1;
+	// 	    var yPos = Math.floor(j/7) * 120 + 15;
+	// 		return yPos + 13;
+	// 	})
+	// 	.text(function(d, i) {return i+1});
+
 // calendar
+var calendarData = [];
 for (var i = 0; i < 30; i++) {
 	// friday was the 1st of Sept.
+	var datum = {}
 	var j = i + 4;
-	var xPos = j % 7 * 120 + 1;
-    var yPos = Math.floor(j/7) * 120 + 15;
+	datum.todate = i+1
+	datum.today = days[(i + 4)%7];
+	datum.xPos = j % 7 * 120 + 1;
+    datum.yPos = Math.floor(j/7) * 120 + 15;
+
+
+    datum.vrToday = false;
+    for (var k = gameOrder.length - 1; k >= 0; k--) {
+    	// console.log(gameOrder[k][1], datum.todate)
+    	if (gameOrder[k][1] === datum.todate) {
+    		datum.vrToday = true;
+    	}
+    }
+	    
+    calendarData.push(datum)
+}
 
 
 
-    d3.select("svg").append('rect')
-    .attr("x", xPos)
-    .attr('y', yPos	)
+calendarBoxes.selectAll('rect')
+	.data(calendarData).enter()
+    .append('rect')
+    .attr("x", function (d) {return d.xPos})
+    .attr('y', function (d){return d.yPos})
     .attr('width', 100)
     .attr('height', 100)
     // .attr('y', 100)
     .attr('stroke', 'black')
-    .attr("fill", 'white');
+    .attr("fill", 'white')
+    .attr('id', function(d) {return 'date-rect-'+d.todate})
+    .on('mouseover', function(d) {
+    	// console.log(d);
+    	if (d.vrToday) {
 
-    d3.select("svg").append('text')
-    .attr("x", function() {
-    	return xPos + 3;
-    })
-    .attr("y", function() {
-    	return yPos + 13;
-    })
-    .text(i+1);
-}
+	    	d3.select('#bodymap-none')
+	    		.attr('visibility', 'hidden');
+	    	d3.select('#bodymap-'+d.today+'-'+d.todate)
+	    		.attr('visibility', 'visible');
+    	}
 
+    })
+    .on('mouseleave', function(d) {
+    	if (d.vrToday) {
+
+	    	d3.select('#bodymap-none')
+	    		.attr('visibility', 'visible');
+	    	d3.select('#bodymap-'+d.today+'-'+d.todate)
+	    		.attr('visibility', 'hidden');
+    	}
+
+    })
+
+
+calendarBoxes.selectAll('text')
+	.data(calendarData).enter()
+    .append('text')
+    .attr("x", function(d) {
+    	return d.xPos + 3;
+    })
+    .attr("y", function(d) {
+    	return d.yPos + 13;
+    })
+    .text(function(d) {//return d.today[0] + ' ' + d.todate
+    	return d.todate
+    });
+
+
+// }
 
 for (var i = 0; i < 7; i++) {
 	var j = i + 4;
@@ -207,48 +312,42 @@ var OffsetY = function(today, todate) {
 var cols = ['#0074D9','#FFBF1C','#FF4136'];
 var colLevels = ['Low', 'Moderate', 'Vigorous'];
 
+
+d3.select('svg').append('text')
+	.attr('x', 5)
+	.attr('y', 26)
+	.attr('font-weight', 'bold')
+	.text('Workout Intensity:')
+
 for (var i = 0; i < 3; i++) {
 	d3.select("svg").append("rect")
 		.attr("x", 5)
-		.attr("y", i * 12 + 20 )
+		.attr("y", i * 12 + 33 )
 		.attr("width", 10)
 		.attr("height", 10)
 		.attr("fill", cols[i])
 
 	d3.select("svg").append("text")
 		.attr("x", 17)
-		.attr("y", i * 12 + 28)
-		.text(colLevels[i]+' workout intensity')
+		.attr("y", i * 12 + 41)
+		.text(colLevels[i])
 
 }
 
 d3.select("svg").append("text")
 	.attr("font-weight", 'bold')
-	.attr("x", 180)
+	.attr("x", 145)
 	.attr("y", 26)
 	.text("VR Game played:");
 
+
+
+
 var colCounter = 0;
 for (var key in gameColours) {
-	// bgElements.append("circle")
-	// 	.attr('cx', 200)
-	// 	.attr("cy", colCounter * 12 + 34)
-	// 	.attr("r", 4)
-	// 	.attr('fill', gameColours[key])
-	// 	.attr("stroke", 'black')
-	// 	.attr("stroke-width", 0.25);
 
-
-	// console.log('external',	key)
 	var bg_vr = d3.select('svg').append('g').attr('id', 'vr-icon-'+key);
-	
 
-	// d3.select("svg").append("text")
-	// 	.attr("x", 210)
-	// 	.attr("y", colCounter * 12 + 38)
-	// 	.text(key);
-
-	// 	colCounter++;
 };
 
 colCounter = 0
@@ -267,12 +366,12 @@ d3.xml("img/vr.svg").then(function(xml) {
 
 	temp.select('svg')	
 		.attr('width', '20')
-		.attr('x', 185)
+		.attr('x', 145)
 		.attr('y', -265 + 12 * colCounter)
 		.attr('fill', function() {return gameColours['HotSquat']})
 		
 	temp.append("text")
-		.attr("x", 210)
+		.attr("x", 170)
 		.attr("y", colCounter * 12 + 38)
 		.text('Hot Squat');
 
@@ -293,12 +392,12 @@ d3.xml("img/vr.svg").then(function(xml) {
 
 	temp.select('svg')	
 		.attr('width', '20')
-		.attr('x', 185)
+		.attr('x', 145)
 		.attr('y', -265 + 12 * colCounter)
 		.attr('fill', function() {return gameColours['Longbow']})
 		
 	temp.append("text")
-		.attr("x", 210)
+		.attr("x", 170)
 		.attr("y", colCounter * 12 + 38)
 		.text('Longbow');
 
@@ -319,12 +418,12 @@ d3.xml("img/vr.svg").then(function(xml) {
 
 	temp.select('svg')	
 		.attr('width', '20')
-		.attr('x', 185)
+		.attr('x', 145)
 		.attr('y', -265 + 12 * colCounter)
 		.attr('fill', function() {return gameColours['Fruitninja']})
 	
 	temp.append("text")
-		.attr("x", 210)
+		.attr("x", 170)
 		.attr("y", colCounter * 12 + 38)
 		.text('Fruitninja');	
 		
@@ -346,12 +445,12 @@ d3.xml("img/vr.svg").then(function(xml) {
 
 	temp.select('svg')	
 		.attr('width', '20')
-		.attr('x', 185)
+		.attr('x', 145)
 		.attr('y', -265 + 12 * colCounter)
 		.attr('fill', function() {return gameColours['Holoball']})
 		
 	temp.append("text")
-		.attr("x", 210)
+		.attr("x", 170)
 		.attr("y", colCounter * 12 + 38)
 		.text('Holoball');	
 
@@ -371,12 +470,12 @@ d3.xml("img/vr.svg").then(function(xml) {
 
 	temp.select('svg')	
 		.attr('width', '20')
-		.attr('x', 185)
+		.attr('x', 145)
 		.attr('y', -265 + 12 * colCounter)
 		.attr('fill', function() {return gameColours['Holopoint']})
 		
 	temp.append("text")
-		.attr("x", 210)
+		.attr("x", 170)
 		.attr("y", colCounter * 12 + 38)
 		.text('Holopoint');	
 
@@ -384,7 +483,45 @@ d3.xml("img/vr.svg").then(function(xml) {
 });
 
 
-var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
+
+
+calSidebar = d3.select('svg').append('g')
+	.attr('class', 'sidebar')
+
+
+calSidebar.append('rect')
+	.attr('x', 833)
+	.attr('y', 0)
+	.attr('width', 350)
+	.attr('height', 600)
+	.attr('stroke', '#AAAAAA')
+	.attr('fill', 'none')
+
+
+
+d3.select('.sidebar').append('svg:image')
+	.attr('class', 'bodymap')
+	.attr('id', 'bodymap-none')
+	.attr('xlink:href', 'img/PNG/map-none.png')
+	.attr('x', 830)
+	.attr('y', 0)
+	.attr('visibility', 'visible')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var drawCal = function(today, todate, input_data, gameName, dayNum) {
 
 	console.log("drawing calendar", input_data[0]);
 
@@ -550,39 +687,37 @@ var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
 		// inside of our d3.xml callback, call another function
 		// that styles individual paths inside of our imported svg
 
-		 styleImportedSVG()
+		 vrIconStyling()
 	});
 
-	function styleImportedSVG() {
+	function vrIconStyling() {
 		d3.select('#'+today + '-' + todate).select('svg')
 			.attr('width', '20')
 			.attr('fill', function() {return gameColours[gameName]})
-	    	.attr('x', function() {return OffsetX(today, todate) + 70})
-	    	.attr('y', function() {return OffsetY(today, todate) - 302})
-		// chart.select("svg").style("fill", 'green');
-		// console.log('this', that)
-        // d3.select('svg')
-        	// d3.select("")
-          // .on('mouseover', function() {
-          //   console.log('mouseover');
-          //   console.log('this', this);
-          //   d3.selectAll('path')
-          //     .style({
-          //       'stroke': 'green',
-          //       // 'stroke-opacity': 0.3
-          //       // ''
+	    	.attr('x', function() {return OffsetX(today, todate) + 68})
+	    	.attr('y', function() {return OffsetY(today, todate) - 300})
 
-          //     })
-          // })
-          // .on('mouseout', function() {
-          //   console.log('mouseout');
-          //   d3.selectAll('path')
-          //     .style({
-          //       'fill-opacity':   1,
-          //       'stroke-opacity': 1
-          //     })
-          // })
 	}
+
+	d3.select('.sidebar').append('svg:image')
+		.attr('class', 'bodymap')
+		.attr('id', 'bodymap-'+today+'-'+todate)
+		.attr('xlink:href', 'img/PNG/map-'+(dayNum + 1)+'.png')
+		.attr('x', 830)
+		.attr('y', 0)
+		.attr('visibility', 'hidden');
+
+	// d3.select('.sidebar').
+	
+	// d3.xml('img/map-'+(dayNum + 1)+'.svg').then(function(xml) {
+	// 	var importedNode = document.importNode(xml.documentElement, true);
+	// 	d3.select('#bodymap-'+today + '-' + todate).each(function() {
+	// 		this.appendChild(importedNode);
+
+	// 	})
+	// 	d3.select('#bodymap-'+today + '-' + todate)
+	// 		.attr('x', 300 + 50 * dayNum)
+	// })
 
     chart.selectAll('line')
         .data(lineData).enter()
@@ -604,7 +739,7 @@ var drawCal = function(today, todate, input_data, gameName, gameOrderIndex) {
             off = OffsetY(today, todate);
             return d.y2 + off;
         })
-        .attr("stroke", function(d) {
+        .attr('stroke', function(d) {
 
         	ret = cols[0];
         	if (d.value > HR_mod) {
