@@ -143,20 +143,48 @@ bgElements.append("rect")
 	.attr('height', 15)
 
 
-stepCount = new Array(30);
-for(var i = 0; i < stepCount.length; i++) {
+// stepCount = new Array(30);
+// for(var i = 0; i < stepCount.length; i++) {
+// 	var rand = 0;
+// 	for (var j = 0; j < 6 ; j++) {
+// 		rand += Math.random();
+// 	}
+// 	stepCount[i] = Math.floor(rand/6  * 12000 + 2000)
+// }
+var calendarData = [];
+for (var i = 0; i < 30; i++) {
+	// friday was the 1st of Sept.
+	var datum = {}
+	var j = i + 4;
+	datum.todate = i+1
+	datum.today = days[(i + 4)%7];
+	datum.xPos = j % 7 * 120 + 1;
+    datum.yPos = Math.floor(j/7) * 120 + 15;
+
 	var rand = 0;
 	for (var j = 0; j < 6 ; j++) {
 		rand += Math.random();
 	}
-	stepCount[i] = Math.floor(rand/6  * 12000 + 2000)
+    
+    datum.stepCount = Math.floor(rand/6 * 12000 + 2000)
+    
+    datum.vrToday = false;
+    
+    for (var k = gameOrder.length - 1; k >= 0; k--) {
+    	// console.log(gameOrder[k][1], datum.todate)
+    	if (gameOrder[k][1] === datum.todate) {
+    		datum.vrToday = true;
+    	}
+    }
+	    
+    calendarData.push(datum)
 }
 
 calendarBoxes = d3.select("svg").append('g')
 calendarBoxesL2 = d3.select("svg").append('g')
 
 calendarBoxesL2.selectAll('rect')
-	.data(stepCount).enter()
+	.data(calendarData).enter()
 	.append('rect')
 	    .attr('x', function(d, i) {
 	    	// console.log(d)
@@ -176,15 +204,36 @@ calendarBoxesL2.selectAll('rect')
 	    .attr('height', 4)
 	    .attr('fill', function(d) {
 	    	var colour = '#DDDDDD'
-	    	if (d > 10000) {
+	    	if (d.stepCount > 10000) {
 	    		colour = '#0074D9'
 	    	}
 	    	else {
-	    		if (d > 5000) {
+	    		if (d.stepCount > 5000) {
 	    			colour = '#7FDBFF'
 	    		}
 	    	}
 	    	return colour;
+	    })
+	    .on('mouseover', function(d) {
+	    	// console.log(d);
+	    	if (d.vrToday) {
+
+		    	d3.select('#bodymap-none')
+		    		.attr('visibility', 'hidden');
+		    	d3.select('#bodymap-'+d.today+'-'+d.todate)
+		    		.attr('visibility', 'visible');
+	    	}
+
+	    })
+	    .on('mouseleave', function(d) {
+	    	if (d.vrToday) {
+
+		    	d3.select('#bodymap-none')
+		    		.attr('visibility', 'visible');
+		    	d3.select('#bodymap-'+d.today+'-'+d.todate)
+		    		.attr('visibility', 'hidden');
+	    	}
+
 	    })
 
 	// .append('text')
@@ -203,27 +252,6 @@ calendarBoxesL2.selectAll('rect')
 	// 	.text(function(d, i) {return i+1});
 
 // calendar
-var calendarData = [];
-for (var i = 0; i < 30; i++) {
-	// friday was the 1st of Sept.
-	var datum = {}
-	var j = i + 4;
-	datum.todate = i+1
-	datum.today = days[(i + 4)%7];
-	datum.xPos = j % 7 * 120 + 1;
-    datum.yPos = Math.floor(j/7) * 120 + 15;
-
-
-    datum.vrToday = false;
-    for (var k = gameOrder.length - 1; k >= 0; k--) {
-    	// console.log(gameOrder[k][1], datum.todate)
-    	if (gameOrder[k][1] === datum.todate) {
-    		datum.vrToday = true;
-    	}
-    }
-	    
-    calendarData.push(datum)
-}
 
 
 
@@ -272,7 +300,29 @@ calendarBoxes.selectAll('text')
     })
     .text(function(d) {//return d.today[0] + ' ' + d.todate
     	return d.todate
-    });
+    })
+    .on('mouseover', function(d) {
+	    	// console.log(d);
+	    	if (d.vrToday) {
+
+		    	d3.select('#bodymap-none')
+		    		.attr('visibility', 'hidden');
+		    	d3.select('#bodymap-'+d.today+'-'+d.todate)
+		    		.attr('visibility', 'visible');
+	    	}
+
+	    })
+	    .on('mouseleave', function(d) {
+	    	if (d.vrToday) {
+
+		    	d3.select('#bodymap-none')
+		    		.attr('visibility', 'visible');
+		    	d3.select('#bodymap-'+d.today+'-'+d.todate)
+		    		.attr('visibility', 'hidden');
+	    	}
+
+	    })
+;
 
 
 // }
@@ -697,6 +747,29 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
 	    	.attr('x', function() {return OffsetX(today, todate) + 68})
 	    	.attr('y', function() {return OffsetY(today, todate) - 300})
 
+	    	.on('mouseover', function(d) {
+	    	// console.log(d);
+	    	// if (d.vrToday) {
+
+		    	d3.select('#bodymap-none')
+		    		.attr('visibility', 'hidden');
+		    	d3.select('#bodymap-'+today+'-'+todate)
+		    		.attr('visibility', 'visible');
+	    	// }
+
+	    })
+	    .on('mouseleave', function(d) {
+	    	// if (d.vrToday) {
+
+		    	d3.select('#bodymap-none')
+		    		.attr('visibility', 'visible');
+		    	d3.select('#bodymap-'+today+'-'+todate)
+		    		.attr('visibility', 'hidden');
+	    	// }
+
+	    })
+
+
 	}
 
 	d3.select('.sidebar').append('svg:image')
@@ -753,7 +826,29 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
         	
             // return 'rgb(255, 0, ' + d.value + ')';
         })
-        .attr("stroke-opacity", 1);
+        .attr("stroke-opacity", 1)
+        .on('mouseover', function(d) {
+	    	// console.log(d);
+	    	// if (d.vrToday) {
+
+		    	d3.select('#bodymap-none')
+		    		.attr('visibility', 'hidden');
+		    	d3.select('#bodymap-'+today+'-'+todate)
+		    		.attr('visibility', 'visible');
+	    	// }
+
+	    })
+	    .on('mouseleave', function(d) {
+	    	// if (vrToday) {
+
+		    	d3.select('#bodymap-none')
+		    		.attr('visibility', 'visible');
+		    	d3.select('#bodymap-'+today+'-'+todate)
+		    		.attr('visibility', 'hidden');
+	    	// }
+
+	    })
+;
 
   //   chart.selectAll('circle')
   //   	.data([today, todate, gameOrderIndex]).enter()
