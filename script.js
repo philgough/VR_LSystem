@@ -1,3 +1,13 @@
+/*
+ *
+ *	Todo:
+ *		- add the user's name
+ *		- add sidebar hover text
+ *
+ */
+
+
+
 var
 	day1 = [],
 	day2 = [],
@@ -143,14 +153,9 @@ bgElements.append("rect")
 	.attr('height', 15)
 
 
-// stepCount = new Array(30);
-// for(var i = 0; i < stepCount.length; i++) {
-// 	var rand = 0;
-// 	for (var j = 0; j < 6 ; j++) {
-// 		rand += Math.random();
-// 	}
-// 	stepCount[i] = Math.floor(rand/6  * 12000 + 2000)
-// }
+
+
+
 var calendarData = [];
 for (var i = 0; i < 30; i++) {
 	// friday was the 1st of Sept.
@@ -216,14 +221,10 @@ calendarBoxesL2.selectAll('rect')
 	    })
 	    .on('mouseover', function(d) {
 
-	    	// console.log(d);
 	    	if (d.vrToday) {
 
 		    vrBodymapOver(d.today, d.todate)
-		    	// d3.select('#bodymap-none')
-		    	// 	.attr('visibility', 'hidden');
-		    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
-		    	// 	.attr('visibility', 'visible');
+
 	    	}
 
 	    })
@@ -231,54 +232,32 @@ calendarBoxesL2.selectAll('rect')
 	    	if (d.vrToday) {
 
 		    	vrBodymapLeave(d.today, d.todate);
-		    	// d3.select('#bodymap-none')
-		    	// 	.attr('visibility', 'visible');
-		    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
-		    	// 	.attr('visibility', 'hidden');
+
 	    	}
 
 	    })
 
-	// .append('text')
-	// 	.attr("x", function(d, i) {
-	// 		var j = i + 4;
-	// 		var xPos = j % 7 * 120 + 1;
-	// 	    var yPos = Math.floor(j/7) * 120 + 15;    	
-	// 		return xPos + 3;
-	// 	})
-	// 	.attr("y", function(d, i) {
-	// 		var j = i + 4;
-	// 		var xPos = j % 7 * 120 + 1;
-	// 	    var yPos = Math.floor(j/7) * 120 + 15;
-	// 		return yPos + 13;
-	// 	})
-	// 	.text(function(d, i) {return i+1});
 
-// calendar
 
 
 
 calendarBoxes.selectAll('rect')
 	.data(calendarData).enter()
     .append('rect')
+    .attr('class', 'calendar-box')
     .attr("x", function (d) {return d.xPos})
     .attr('y', function (d){return d.yPos})
     .attr('width', 100)
     .attr('height', 100)
-    // .attr('y', 100)
     .attr('stroke', 'black')
     .attr("fill", 'white')
     .attr('id', function(d) {return 'date-rect-'+d.todate})
     .on('mouseover', function(d) {
 
-    	// console.log(d);
     	if (d.vrToday) {
 
 	    vrBodymapOver(d.today, d.todate)
-	    	// d3.select('#bodymap-none')
-	    	// 	.attr('visibility', 'hidden');
-	    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
-	    	// 	.attr('visibility', 'visible');
+
     	}
 
     })
@@ -286,10 +265,7 @@ calendarBoxes.selectAll('rect')
     	if (d.vrToday) {
 
 	    	vrBodymapLeave(d.today, d.todate);
-	    	// d3.select('#bodymap-none')
-	    	// 	.attr('visibility', 'visible');
-	    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
-	    	// 	.attr('visibility', 'hidden');
+
     	}
 
     })
@@ -309,14 +285,10 @@ calendarBoxes.selectAll('text')
     })
     .on('mouseover', function(d) {
 
-	    	// console.log(d);
 	    	if (d.vrToday) {
 
 		vrBodymapOver(d.today, d.todate)
-		    	// d3.select('#bodymap-none')
-		    	// 	.attr('visibility', 'hidden');
-		    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
-		    	// 	.attr('visibility', 'visible');
+
 	    	}
 
 	    })
@@ -324,17 +296,13 @@ calendarBoxes.selectAll('text')
 	    	if (d.vrToday) {
 
 		    	vrBodymapLeave(d.today, d.todate);
-		    	// d3.select('#bodymap-none')
-		    	// 	.attr('visibility', 'visible');
-		    	// d3.select('#bodymap-'+d.today+'-'+d.todate)
-		    	// 	.attr('visibility', 'hidden');
+
 	    	}
 
-	    })
-;
+	    });
 
 
-// }
+
 
 for (var i = 0; i < 7; i++) {
 	var j = i + 4;
@@ -372,34 +340,70 @@ var cols = ['#0074D9','#FFBF1C','#FF4136'];
 var colLevels = ['Low', 'Moderate', 'Vigorous'];
 
 
-d3.select('svg').append('text')
+var workoutIntensityLegend = d3.select('svg').append('g')
+
+// for (var i = 0; i < 3; i++) {
+	workoutIntensityLegend.selectAll('rect')
+		.data(cols).enter()
+			.append('rect')
+			.attr('x', 5)
+			.attr('y', function(d, i) {return i * 12 + 33;})
+			.attr('width', 10)
+			.attr('height', 10)
+			.attr('fill', function(d) {return d;})
+
+	workoutIntensityLegend.selectAll('text')
+		.data(colLevels).enter()
+			.append('text')
+			.attr('x', 17)
+			.attr('y', function(d, i) {return i * 12 + 41;})
+			.text(function(d) {return d})
+
+// }
+
+workoutIntensityLegend.append('text')
 	.attr('x', 5)
 	.attr('y', 26)
 	.attr('font-weight', 'bold')
-	.text('Workout Intensity:')
+	.text('VR Workout Intensity:')
 
-for (var i = 0; i < 3; i++) {
-	d3.select("svg").append("rect")
-		.attr("x", 5)
-		.attr("y", i * 12 + 33 )
-		.attr("width", 10)
-		.attr("height", 10)
-		.attr("fill", cols[i])
 
-	d3.select("svg").append("text")
-		.attr("x", 17)
-		.attr("y", i * 12 + 41)
-		.text(colLevels[i])
-
-}
-
-d3.select("svg").append("text")
+d3.select('svg').append("text")
 	.attr("font-weight", 'bold')
 	.attr("x", 145)
 	.attr("y", 26)
 	.text("VR Game played:");
 
 
+stepLegendColour = ['#DDDDDD', '#7FDBFF', '#0074D9']
+var stepLegend = d3.select('svg').append('g')
+
+
+
+stepLegendText = ['less than 50%', 'between 50% and 100%', '100% or greater']
+stepLegend.selectAll('rect')
+	.data(stepLegendText).enter()
+		.append('rect')
+		.attr('x', 250)
+		.attr('y', function(d, i) {return i * 15 + 35})
+		.attr('width', 20)
+		.attr('height', 3)
+		.attr('fill', function(d, i) {
+			return stepLegendColour[i]
+		})
+stepLegend.selectAll('text')
+	.data(stepLegendText).enter()
+		.append('text')
+		.attr('x', 275)
+		.attr('y', function(d, i) { return i* 15 + 40})
+		.text(function(d){return d})	
+
+
+stepLegend.append('text')
+	.attr('x', 250)
+	.attr('y', 25)
+	.attr('font-weight', 'bold')
+	.text('Achieving the recommended step goal')
 
 
 var colCounter = 0;
@@ -548,6 +552,7 @@ calSidebar = d3.select('svg').append('g')
 	.attr('class', 'sidebar')
 
 
+
 calSidebar.append('rect')
 	.attr('x', 833)
 	.attr('y', 0)
@@ -565,6 +570,53 @@ d3.select('.sidebar').append('svg:image')
 	.attr('x', 830)
 	.attr('y', 0)
 	.attr('visibility', 'visible')
+
+
+
+
+/*
+ * sidebar details
+ */
+
+sidebarInfo = calSidebar.append('g')
+
+
+var sidebarInfoHeaders = ['Steps', 'VR Games Played', 'Workout Intensity', 'VR Games gave you'];
+
+sidebarInfo.selectAll('text')
+	.data(sidebarInfoHeaders).enter()
+	.append('text')
+		.attr('class', 'h2-text')
+		.attr('x', 1020)
+		.attr('y', function(d, i) {
+			return 65 + i * 140;
+		})
+		.text(function(d) {return d;})
+
+
+sidebarInfo.append('text')
+	.attr('class', 'h1-text')
+	.attr('x', 1000)
+	.attr('y', 40)
+	.text('Sam')
+
+
+
+
+var sidebarInfoStartData = {
+	'today': 'other',
+	'todate': 0,
+	'steps': 0,
+	'games': 'none',
+	'intensity':{'vig':0, 'mod':0},
+	'total':0
+};
+
+
+var sidebarInfoData = sidebarInfoStartData;
+
+
+
 
 
 
@@ -840,42 +892,16 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
         })
         .attr("stroke-opacity", 1)
         .on('mouseover', function(d) {
-
-	    	// console.log(d);
-	    	// if (d.vrToday) {
-
 		    vrBodymapOver(today, todate)
-		    	// d3.select('#bodymap-none')
-		    	// 	.attr('visibility', 'hidden');
-		    	// d3.select('#bodymap-'+today+'-'+todate)
-		    	// 	.attr('visibility', 'visible');
-	    	// }
 
 	    })
 	    .on('mouseleave', function(d) {
-	    	// if (vrToday) {
-
 		    	vrBodymapLeave(today, todate);
-		    	// d3.select('#bodymap-none')
-		    	// 	.attr('visibility', 'visible');
-		    	// d3.select('#bodymap-'+today+'-'+todate)
-		    	// 	.attr('visibility', 'hidden');
-	    	// }
+
 
 	    })
 ;
 
-  //   chart.selectAll('circle')
-  //   	.data([today, todate, gameOrderIndex]).enter()
-  //   	.append('circle')
-  //   	.attr("cx", function(d) {return OffsetX(today, todate) + 83})
-  //   	.attr('cy', function(d) {return OffsetY(today, todate) - 3})
-  //   	.attr('r', 4)
-  //   	.attr('fill', function(d) {return gameColours[gameName]})
-		// .attr("stroke", 'black')
-		// .attr("stroke-width", 0.25);
-
-	
 
 }
 

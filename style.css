@@ -97,3 +97,14 @@ text {
 
 
 
+.h1-text {
+    font-size: 36pt ;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.h2-text {
+    font-size: 12pt;
+    font-weight: bold;
+    
+}
