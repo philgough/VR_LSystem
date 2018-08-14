@@ -8,15 +8,15 @@
 
 
 
-var
-	day1 = [],
-	day2 = [],
-	day3 = [],
-	day4 = [],
-	day5 = [],
-	day6 = [],
-	day7 = [],
-	day8 = [];
+// var
+// 	day1 = [],
+// 	day2 = [],
+// 	day3 = [],
+// 	day4 = [],
+// 	day5 = [],
+// 	day6 = [],
+// 	day7 = [],
+// 	day8 = [];
 	// day9 = [],
 	// day10 = [];
 
@@ -181,7 +181,7 @@ for (var i = 0; i < 30; i++) {
     		datum.vrToday = true;
     	}
     }
-	    
+	
     calendarData.push(datum)
 }
 
@@ -603,23 +603,100 @@ sidebarInfo.append('text')
 
 
 
-var sidebarInfoStartData = {
-	'today': 'other',
-	'todate': 0,
-	'steps': 0,
-	'games': 'none',
-	'intensity':{'vig':0, 'mod':0},
-	'total':0
-};
+var sidebarInfoStartData = [0, 'none', {vig:0, mod:0}, 0];
+// {
+// 	'steps': 0,
+// 	'games': 'none',
+// 	'intensity':{'vig':0, 'mod':0},
+// 	'total':0
+// };
+
+
 
 
 var sidebarInfoData = sidebarInfoStartData;
 
+var sidebarInfoDetails = sidebarInfo.append('g')
+
+
+// sidebarInfoDetails.selectAll('text')
+// 	.data(sidebarInfoStartData).enter()
+// 	.append('text')
+// 	.attr('x', 1030)
+// 	.attr('y', function(d, i) {return 85 + i * 140;})
+// 	.text(function(d, i) {
+// 		switch(i) {
+// 			case 0:
+// 				console.log(d);
+// 				return  d;
+// 				break;
+// 			case 1:
+// 				return d;
+// 				break;
+// 			case 2:
+// 				return d.vig + ':' + d.mod;
+// 				break;
+// 			case 3:
+// 				return d;
+// 				break;
+// 		}
+// 	})
+// d3.select(body)
+
+function updateSidebar(today, todate) {
+	// console.log(calendarData, today, todate)
+	// [0, 'none', {vig:0, mod:0}, 0];
+	// {
+	var ind = todate - 1;
+
+	console.log(calendarData[ind]);
+
+	console.log(calendarData[ind]['vrToday']);
+
+	var game = 'none'
+	var data = ['', 'none', {'vig':0, 'mod':0}, 0]
+	gameOrder.forEach(function(d,i) {
+		if(d[1] === todate) {
+			data[1] = "Toay, you played "+d[0]+"for 35 minutes";
+		}
+
+	})
 
 
 
+	console.log(game);
+ 	// sidebarInfoDetails.data([newSidebarData]).update();
+ 	d3.selectAll('.detail-text').remove()
+ 	// console.log('update the sidebar with', newSidebarData)
+	sidebarInfoDetails.selectAll('p')
+		.data(data).enter()
+		.append('p')
+		.attr('class', 'detail-text')
+		.attr('x', 1030)
+		// .attr('dx', 100)
+		.attr('y', function(d, i) {return 85 + i * 140;})
+		.attr('dy, 10')
+		.text(function(d, i) {
+			switch(i) {
+				case 0:
+					console.log(d);
+					return  d;
+					break;
+				case 1:
+					return d;
+					break;
+				case 2:
+					return d.vig + ':' + d.mod;
+					break;
+				case 3:
+					return d;
+					break;
+			}
+		})
+	 }
 
 
+// updateSidebar(sidebarInfoData)
 
 
 
@@ -813,12 +890,14 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
 	    	// console.log(d);
 	    	// if (d.vrToday) {
 
-		    	vrBodymapOver(today, todate)
+		    	vrBodymapOver(today, todate);
 		    	// d3.select('#bodymap-none')
 		    	// 	.attr('visibility', 'hidden');
 		    	// d3.select('#bodymap-'+today+'-'+todate)
 		    	// 	.attr('visibility', 'visible');
 	    	// }
+
+	    		updateSidebar(today, todate);
 
 	    })
 	    .on('mouseleave', function(d) {
@@ -830,6 +909,7 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
 		    	// d3.select('#bodymap-'+today+'-'+todate)
 		    	// 	.attr('visibility', 'hidden');
 	    	// }
+	    		updateSidebar(today, todate);
 
 	    })
 
