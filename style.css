@@ -110,6 +110,49 @@ text {
 
 .step-number-text {
     font-size: 18pt;
-    
+}
 
+nav {
+    float:left;
+}
+ul {
+    display: inline;
+    margin: 1em;
+    padding: 1em;
+    list-style: none;
+}
+ul li {
+    height: 1.2em;
+    float: left;
+    margin: .4em .3em;
+}
+ul li > img:hover + aside {
+    visibility: visible;
+    /*display: show;*/
+        /*text-decoration: none;  */
+}
+
+li > img + aside {
+    visibility:hidden;
+}
+
+#info-hover {
+    height: 1.2em;
+}
+#prev-next {
+    height: 1.2em;
+}
+
+#help-over {
+    width: 30%;
+    position:absolute;
+    /*display: none;*/
+}
+
+/*#info-hover:hover + #help-over {
+    display:show;
+}
+*/
+main {
+    clear: both;
 }

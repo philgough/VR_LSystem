@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 797 582" style="enable-background:new 0 0 797 582;" xml:space="preserve">
+<style type="text/css">
+	.st0{font-family:'MyriadPro-Regular';}
+	.st1{font-size:32px;}
+	.st2{fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
+</style>
+<image style="overflow:visible;" width="1072" height="1074" xlink:href="../../../Desktop/Screen Shot 2018-08-22 at 1.14.49 pm.png"  transform="matrix(0.5 0 0 0.5 124 41)">
+</image>
+<text transform="matrix(1 0 0 1 33 41)" class="st0 st1">Date</text>
+<text transform="matrix(1 0 0 1 5 160)"><tspan x="0" y="0" class="st0 st1">Timeline</tspan><tspan x="0" y="38.4" class="st0 st1">Start</tspan></text>
+<text transform="matrix(1 0 0 1 268 26)" class="st0 st1">Steps Taken Today</text>
+<text transform="matrix(1 0 0 1 660 26)"><tspan x="0" y="0" class="st0 st1">VR Game</tspan><tspan x="0" y="38.4" class="st0 st1">Played</tspan></text>
+<text transform="matrix(1 0 0 1 660 166)"><tspan x="0" y="0" class="st0 st1">Timeline</tspan><tspan x="0" y="38.4" class="st0 st1">End</tspan></text>
+<path class="st2" d="M5,213c7,1,114,0,114,0l71-56"/>
+<polyline class="st2" points="577,155 660,219 792,219 "/>
+<polyline class="st2" points="787,77 664,77 621,93 "/>
+<polyline class="st2" points="505,36 268,36 323,67 "/>
+<polyline class="st2" points="33,48 105,48 158,81 "/>
+<circle cx="190" cy="157" r="6.9"/>
+<circle cx="158" cy="81" r="6.9"/>
+<circle cx="323.4" cy="67" r="6.9"/>
+<circle cx="621" cy="93" r="6.9"/>
+<circle cx="577" cy="155" r="6.9"/>
+</svg>

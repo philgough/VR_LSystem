@@ -21,26 +21,26 @@
 	// day10 = [];
 
 gameOrder = [
-	['Holoball', 4],
-	['Fruitninja', 6],
-	['Holopoint', 8],
-	['Longbow', 12],
-	['Longbow', 14],
-	['Holopoint', 18],
-	['HotSquat', 21],
-	['Fruitninja', 26],
-	['HotSquat', 28],
-	['Longbow', 29]
+	[['HotSquat'], 4],
+	[['Fruitninja'], 6],
+	[['Holopoint'], 8],
+	[['Longbow'], 12],
+	[['Longbow'], 14],
+	[['Holopoint'], 18],
+	[['Holoball'], 21],
+	[['Longbow', 'Fruitninja'], 26],
+	[['Holoball'], 28],
+	[['Longbow'], 29]
 
 
 ];
 
 gameColours = {
-	'HotSquat': '#B10DC9',
-	'Longbow':'#3D9970',
-	'Fruitninja': '#01FF70',
-	'Holoball': '#F012BE',
-	'Holopoint': '#FFDC00',
+	'HotSquat': '#F498CA',
+	'Longbow':'#ED956F',
+	'Fruitninja': '#E9F274',
+	'Holoball': '#B8E49D',
+	'Holopoint': '#F7EBCE',
 };
 
 
@@ -129,7 +129,7 @@ days = [
 ];
 
 
-d3.select('body').append("svg")
+d3.select('main').append("svg")
 	.attr("class", 'chart')
 	.attr("width", 1400)
 	.attr('height', 600);
@@ -460,7 +460,7 @@ stepLegend.append('text')
 	.attr('x', 250)
 	.attr('y', 25)
 	.attr('font-weight', 'bold')
-	.text('Recommended step goal')
+	.text('Goal: 10,000 daily steps')
 
 
 var colCounter = 0;
@@ -782,7 +782,7 @@ function updateSidebar(today, todate) {
 
 var drawCal = function(today, todate, input_data, gameName, dayNum) {
 
-	console.log("drawing calendar", input_data[0]);
+	console.log("drawing calendar", input_data[0], gameName);
 
     var w = window.innerwidth,
         h = window.innerheight;
@@ -930,64 +930,69 @@ var drawCal = function(today, todate, input_data, gameName, dayNum) {
     }
 
 
-    chart = d3.select('svg').append('g')
-    	.attr("class", 'l-system')
-        .attr('id', today + '-' + todate)
-        .attr('width', window.innerwidth)
-        .attr('hight', window.innerheight);
 
+    gameName.forEach(function (gameNameD, ind){
+    	console.log(gameNameD, ind);
+    	
+	    chart = d3.select('svg').append('g')
+	    	.attr("class", 'l-system')
+	        .attr('id', today + '-' + todate + '-' + ind)
+	        .attr('width', window.innerwidth)
+	        .attr('hight', window.innerheight);
 
-	d3.xml("img/vr.svg").then(function(xml) {
-		var importedNode = document.importNode(xml.documentElement, true);
-		d3.select('#'+today + '-' + todate).each(function() {
-			this.appendChild(importedNode);
-
-		})
-		// inside of our d3.xml callback, call another function
-		// that styles individual paths inside of our imported svg
-
-		 vrIconStyling()
-	});
-
-	function vrIconStyling() {
-		d3.select('#'+today + '-' + todate).select('svg')
-			.attr('width', '20')
-			.attr('fill', function() {return gameColours[gameName]})
-	    	.attr('x', function() {return OffsetX(today, todate) + 68})
-	    	.attr('y', function() {return OffsetY(today, todate) - 300})
-
-	    	.on('mouseover', function(d) {
-
-	    	// console.log(d);
-	    	// if (d.vrToday) {
-
-		    	vrBodymapOver(today, todate);
-		    	// d3.select('#bodymap-none')
-		    	// 	.attr('visibility', 'hidden');
-		    	// d3.select('#bodymap-'+today+'-'+todate)
-		    	// 	.attr('visibility', 'visible');
-	    	// }
-
-	    		// updateSidebar(today, todate);
-	    		bodymapStepsOver(today, todate);
-
-	    })
-	    .on('mouseleave', function(d) {
-	    	// if (d.vrToday) {
-
-		    	vrBodymapLeave(today, todate);
-		    	// d3.select('#bodymap-none')
-		    	// 	.attr('visibility', 'visible');
-		    	// d3.select('#bodymap-'+today+'-'+todate)
-		    	// 	.attr('visibility', 'hidden');
-	    	// }
-	    		// updateSidebar(today, todate);
-	    		bodymapStepsOver(today, todate);
-
-	    })
-
-
-	}
+    	d3.xml("img/vr.svg").then(function(xml) {
+    		var importedNode = document.importNode(xml.documentElement, true);
+    		d3.select('#'+today + '-' + todate + '-' + ind).each(function() {
+    			this.appendChild(importedNode);
+    
+    		})
+    		// inside of our d3.xml callback, call another function
+    		// that styles individual paths inside of our imported svg
+    
+    		 vrIconStyling()
+    	});
+    
+    	function vrIconStyling() {
+    		d3.select('#'+today + '-' + todate + '-' + ind).select('svg')
+    			.attr('width', '20')
+    			.attr('fill', function() {return gameColours[gameNameD]})
+    	    	.attr('x', function() {return OffsetX(today, todate) + 68 - ind * 23})
+    	    	.attr('y', function() {return OffsetY(today, todate) - 300})
+    
+    	    	.on('mouseover', function(d) {
+    
+    	    	// console.log(d);
+    	    	// if (d.vrToday) {
+    
+    		    	vrBodymapOver(today, todate);
+    		    	// d3.select('#bodymap-none')
+    		    	// 	.attr('visibility', 'hidden');
+    		    	// d3.select('#bodymap-'+today+'-'+todate)
+    		    	// 	.attr('visibility', 'visible');
+    	    	// }
+    
+    	    		// updateSidebar(today, todate);
+    	    		bodymapStepsOver(today, todate);
+    
+    	    })
+    	    .on('mouseleave', function(d) {
+    	    	// if (d.vrToday) {
+    
+    		    	vrBodymapLeave(today, todate);
+    		    	// d3.select('#bodymap-none')
+    		    	// 	.attr('visibility', 'visible');
+    		    	// d3.select('#bodymap-'+today+'-'+todate)
+    		    	// 	.attr('visibility', 'hidden');
+    	    	// }
+    	    		// updateSidebar(today, todate);
+    	    		bodymapStepsOver(today, todate);
+    
+    	    })
+    
+    
+    	}
+    })
+    
 
 	d3.select('.sidebar').append('svg:image')
 		.attr('class', 'bodymap')
