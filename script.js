@@ -39,8 +39,8 @@ gameColours = {
 	'HotSquat': '#F498CA',
 	'Longbow':'#ED956F',
 	'Fruitninja': '#E9F274',
-	'Holoball': '#B8E49D',
-	'Holopoint': '#F7EBCE',
+	'Holoball': '#6FB078',
+	'Holopoint': '#983B4B',
 };
 
 
